@@ -38,6 +38,8 @@ const testMiddleware = (req, res, next) => {
 
 app.get('/time', testMiddleware)
 
+console.log(888);
+
 app.get('/time', function(req, res) {
   var responseText = 'Hello World!<br>'
   responseText += '<small>Requested at: ' + req.requestTime + '</small>'
