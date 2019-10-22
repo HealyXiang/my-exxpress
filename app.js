@@ -30,10 +30,18 @@ var requestTime = function(req, res, next) {
 
 app.use(requestTime);
 
+const testMiddleware = (req, res, next) => {
+  let str = 'This is from middleware!';
+  req.str = str;
+  next();
+}
+
+app.get('/time', testMiddleware)
+
 app.get('/time', function(req, res) {
   var responseText = 'Hello World!<br>'
   responseText += '<small>Requested at: ' + req.requestTime + '</small>'
-  res.send(responseText)
+  res.send(responseText + req.str)
 })
 
 app.all('/secret', function(req, res, next) {
