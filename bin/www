@@ -15,7 +15,7 @@ var http = require('http');
  
 console.log('process.argv[2]:', process.argv[2]);
 const temp = process.argv[2];
-var port = normalizePort(temp || '8080');
+var port = normalizePort(temp || '3000');
 app.set('port', port);
 
 /**
