@@ -58,7 +58,7 @@ app.get('/ab?cd', function(req, res) {
 app.get('/users/:userId/books/:bookId', (req, res) => {
   res.send(req.params);
 })
-app.get('/ajax', (req, res) => {
+app.get('/api/ajax', (req, res) => {
   res.send({data: 'ajax success'});
 })
 
