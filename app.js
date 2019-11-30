@@ -45,7 +45,7 @@ app.get('/time', function(req, res) {
 })
 
 app.all('/secret', function(req, res, next) {
-  console.log('Accessing the secret section ...')
+  // console.log('Accessing the secret section ...')
   next() // pass control to the next handler
 });
 app.get('/about', function(req, res) {
@@ -58,11 +58,14 @@ app.get('/ab?cd', function(req, res) {
 app.get('/users/:userId/books/:bookId', (req, res) => {
   res.send(req.params);
 })
+app.get('/ajax', (req, res) => {
+  res.send({data: 'ajax success'});
+})
 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  console.log(req);
+  // console.log(req);
   next(createError(404));
 });
 
