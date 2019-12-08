@@ -59,9 +59,18 @@ app.get('/users/:userId/books/:bookId', (req, res) => {
   res.send(req.params);
 })
 app.get('/api/ajax', (req, res) => {
-  res.send({data: 'ajax success'});
+  res.send({data: 'ajax success', nested_data: {under_data: 'this for test underline'}});
 })
 
+app.post('/api/post', (req, res) => {
+  console.log('req in post:', req.body);
+  res.send({
+    data: 'post success',
+    nested_data: {
+      under_data: 'this for test post underline'
+    }
+  });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
