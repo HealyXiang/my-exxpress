@@ -35,6 +35,12 @@ const testMiddleware = (req, res, next) => {
   req.str = str;
   next();
 }
+const settingMiddleware = (req, res, next) => {
+  res.cookie('name', 'User');
+  res.send({});
+}
+
+app.get('/api/settings', settingMiddleware);
 
 app.get('/time', testMiddleware)
 
@@ -61,7 +67,6 @@ app.get('/users/:userId/books/:bookId', (req, res) => {
 app.get('/api/ajax', (req, res) => {
   res.send({data: 'ajax success', nested_data: {under_data: 'this for test underline'}});
 })
-
 app.post('/api/post', (req, res) => {
   console.log('req in post:', req.body);
   res.send({
