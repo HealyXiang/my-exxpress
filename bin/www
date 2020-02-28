@@ -13,9 +13,9 @@ var initWebSocket = require('../socket/websocket');
  */
 
  
-console.log('process.argv[2]:', process.argv[2]);
 const temp = process.argv[2];
-var port = normalizePort(temp || '3002');
+var port = normalizePort(temp || '3000');
+console.log('listening on ' + port);
 app.set('port', port);
 
 /**
