@@ -8,7 +8,25 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 // var socket = require('./socket/websocket.js');
+var express = require('express');
 var app = express();
+var expressWs = require('express-ws')(app);
+
+var wss = expressWs.getWss();
+
+var clients = [];  // websocket pool
+wss.on('connection', function(ws) {
+    console.log('start websocket connection');
+    // 将该连接加入连接池
+    clients.push(ws);
+
+    ws.on('close', function(message) {
+        // 连接关闭时，将其移出连接池
+        clients = clients.filter(function(ws1){
+            return ws1 !== ws
+        })
+    });
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,6 +41,31 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.use(function (req, res, next) {
+  console.log('middleware');
+  req.testing = 'testing';
+  return next();
+});
+ 
+app.get('/', function(req, res, next){
+  console.log('get route', req.testing);
+  res.end();
+});
+ 
+app.ws('/ws', function(ws, req) {
+  ws.on('message', function(msg) {
+    clients.forEach(function(ws1){
+        // if(ws1 !== ws) {
+        //     ws1.send(message);
+        // }
+        console.log('msg:', msg);
+        ws1.send(msg);
+    })
+    console.log('msg outer:', msg);
+  });
+  console.log('socket this:', req.testing);
+});
 
 var requestTime = function(req, res, next) {
   req.requestTime = Date.now()

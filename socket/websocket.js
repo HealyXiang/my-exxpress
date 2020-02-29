@@ -8,6 +8,7 @@ var initWebsocket = function(server) {
     var clients = [];
 
     wss.on('connection', function(ws) {
+        console.log('there is connection');
         // 将该连接加入连接池
         clients.push(ws);
         ws.on('message', function(message) {
